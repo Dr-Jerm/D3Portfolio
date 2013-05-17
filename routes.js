@@ -1,5 +1,3 @@
-// Routes.js
-
 var app = require('./server').app,
     videos = require('./static/js/videos').videos,
     bio = require('./static/js/videos').bio;

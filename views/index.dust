@@ -1,4 +1,18 @@
 {>layout/}
   {<content}
-  Hello World
+  <div id="title"></div>
+  <div id="menu">
+    <ul id="navigation">
+      <li><a href="">navitem</a></li>
+      <li><a href="">navitem</a></li>
+      <li><a href="">navitem</a></li>
+    </ul>
+    <ul id="links">
+      <li><a href="">linkItems</a></li>
+      <li><a href="">linkItems</a></li>
+      <li><a href="">linkItems</a></li>
+      <li><a href="">linkItems</a></li>
+    </ul>
+  </div>
+  <div id="portfolioApp"></div>
   {/content}

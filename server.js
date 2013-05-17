@@ -13,7 +13,7 @@ var port = 8081;
 var emailer = require('./emailer'),
     contactMe = require('./models/contact-me');
 
-var util = require('util');
+//var util = require('util');
 
 //Setup Express
 
@@ -44,20 +44,6 @@ io.sockets.on('connection', function(socket){
         console.log("Client message: " + data)
         // socket.broadcast.emit('server_message',data);
         // socket.emit('server_message',data);
-    });
-    socket.on('contact_post', function(data){
-console.log(util.inspect(data));
-        try{
-           check(data.contact.email).isEmail()
-           contactMe.add(data.contact, function(rows){
-               emailer.emailContactMe(data);
-           });
-        
-        }
-        catch(e){
-            console.log("something is fishy... their email changed: " + e.message);
-        }
-
     });
     socket.on('disconnect', function(){
         console.log('Client Disconnected.');

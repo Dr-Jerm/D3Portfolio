@@ -3,6 +3,7 @@
   <head>
     <title>{title}</title>
     <link rel='stylesheet' href='/css/portfolio.css' />
+    <script data-main="js/boot" src="js/require.js"></script>
   </head>
   <body>
     <h1>{title}</h1>
