@@ -1,4 +1,4 @@
-var db = require('../db');
+// var db = require('../db');
 var util = require('util');
 
 var contactMe = function(data){
@@ -16,7 +16,7 @@ var contactMe = function(data){
 }
 
 //Should be a cached function in contactMe.controller.
-contactMe.prototype.get = function(id, callback) {
+/*contactMe.prototype.get = function(id, callback) {
     db.query("SELECT * FROM guestbook WHERE id = " + id + ";", function(err, rows){
         if(err){return callback(err);}
         else {
@@ -59,3 +59,4 @@ exports.add = function(data, callback) {
         }
     })
 };
+*/

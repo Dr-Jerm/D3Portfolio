@@ -2,7 +2,7 @@ define(function (require){
 
 	var $ = require('jquery'),
         d3 = require('d3'),
-        Node = require('../node');
+        Circle = require('../circle');
 
 	$('#title').append("WOOT!");
     console.log("up and running");
@@ -11,34 +11,43 @@ define(function (require){
     var w = window.innerWidth,
 		h = window.innerHeight;
 
-	var testNode = new Node();
-	testNode.testTest();
+	var svg = d3.select("#portfolioApp").append("svg:svg")
+		.attr("width", w)
+		.attr("height", h);
 
-	var nodes = d3.range(200).map(function() { return {radius: Math.random() * 12 + 4}; }),
+	var circles = [];
+
+	var circleCount = 200;
+	var count = 0;
+	while(count < circleCount){
+		var newCircle = new Circle(svg, {radius: Math.random() * 12 + 4});
+		circles.push(newCircle);
+		newCircle.addCircle(svg,[newCircle]);
+		count++;
+	}
+
 	color = d3.scale.category10();
 	var force = d3.layout.force()
 		.gravity(0.05)
 		.charge(function(d, i) { return i ? 0 : -2000; })
-		.nodes(nodes)
+		.nodes(circles)
 		.size([w, h]);
-	var root = nodes[0];
+	var root = circles[0];
 	root.radius = 0;
 	root.fixed = true;
 	force.start();
-	var svg = d3.select("#portfolioApp").append("svg:svg")
-		.attr("width", w)
-		.attr("height", h);
-	svg.selectAll("circle")
-		.data(nodes.slice(1))
-		.enter().append("svg:circle")
-		.attr("r", function(d) { return d.radius - 2; })
-		.style("fill", function(d, i) { return color(i % 3); });
+
+	// svg.selectAll("circle")
+	// 	.data(circles.slice(1))
+	// 	.enter().append("svg:circle")
+	// 	.attr("r", function(d) { return d.radius - 2; })
+	// 	.style("fill", function(d, i) { return color(i % 3); });
 	force.on("tick", function(e) {
-		var q = d3.geom.quadtree(nodes),
+		var q = d3.geom.quadtree(circles),
 		i = 0,
-		n = nodes.length;
+		n = circles.length;
 		while (++i < n) {
-			q.visit(collide(nodes[i]));
+			q.visit(collide(circles[i]));
 		}
 		svg.selectAll("circle")
 			.attr("cx", function(d) { return d.x; })
@@ -52,7 +61,13 @@ define(function (require){
 	// 	force.resume();
 	// });
 
-    $("#portfolioApp").mousemove(function(event) {
+    $(window).mousemove(function(event) {
+        root.px = ( event.clientX);
+        root.py = ( event.clientY);
+        force.resume();
+    });
+
+    $(window).click(function(event) {
         root.px = ( event.clientX);
         root.py = ( event.clientY);
         force.resume();
